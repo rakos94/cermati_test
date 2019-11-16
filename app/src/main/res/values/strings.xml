@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Test Cermati</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="api_limit">this API has a limit of 10 hits per minute</string>
 </resources>

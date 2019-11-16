@@ -4,7 +4,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.test.cermati.MainActivity;
+import com.test.cermati.Interfaces.MyCallbackInterface;
 
 import org.json.JSONException;
 
@@ -22,9 +22,9 @@ public class GitHubModel {
 
     private final OkHttpClient client = new OkHttpClient();
     private String url;
-    private MainActivity.MyCallbackInterface callback;
+    private MyCallbackInterface callback;
 
-    public GitHubModel(MainActivity.MyCallbackInterface callback, String url) {
+    public GitHubModel(MyCallbackInterface callback, String url) {
         this.url = url;
         this.callback = callback;
     }
@@ -46,15 +46,18 @@ public class GitHubModel {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override public void onResponse(Call call, Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
-                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-
-                    try {
-                        callback.onCallBack(responseBody);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    int length = 0;
+                    if (!response.isSuccessful()) {
+                        callback.onCallBackError(response);
+                    } else {
+                        try {
+                            length = callback.onCallBack(responseBody);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-//                    _this.onCallBack(responseBody);
-//                    System.out.println(responseBody.string());
+
+                    callback.postCallback(length);
                 }
             }
         });

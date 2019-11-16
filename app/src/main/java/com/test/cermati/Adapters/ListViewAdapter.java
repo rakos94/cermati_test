@@ -11,20 +11,16 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.test.cermati.R;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class ListViewAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<Map<String,String>> list = null;
-    private ArrayList<Map<String,String>> arraylist;
 
     public ListViewAdapter(Context context, List<Map<String,String>> animalNamesList) {
         this.inflater = LayoutInflater.from(context);
         this.list = animalNamesList;
-        this.arraylist = new ArrayList<Map<String,String>>();
-        this.arraylist.addAll(animalNamesList);
     }
 
     @Override
